@@ -6,6 +6,8 @@ import { ApiService } from './api/api.service';
 import { User } from './entities/user.entity'; 
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { JwtStrategy } from './auth/jwt.strategy'; // Імпортуємо стратегію
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 
 @Module({
@@ -30,6 +32,6 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [ApiController],
-  providers: [ApiService],
+  providers: [ApiService, JwtStrategy, JwtAuthGuard],
 })
 export class AppModule {}
