@@ -1,18 +1,20 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param, UsePipes, ValidationPipe } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from '../entities/user.entity';
+import { CreateUserDto } from './user.dto';
 
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  async createUser(
-    @Body('name') name: string,
-    @Body('email') email: string,
-    @Body('password') password: string,
-  ): Promise<User> {
-    return this.userService.createUser(name, email, password);
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  async createUser(@Body() createUserDto: CreateUserDto) {
+    return this.userService.createUser(
+      createUserDto.name,
+      createUserDto.email,
+      createUserDto.password
+    );
   }
 
   @Get()
