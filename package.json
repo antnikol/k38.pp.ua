@@ -28,6 +28,7 @@
     "test": "test"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
     "@types/jest": "^29.5.14"
   }
 }
