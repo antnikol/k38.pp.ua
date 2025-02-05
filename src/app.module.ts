@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtStrategy } from './auth/jwt.strategy'; // Імпортуємо стратегію
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { AdminModule } from './admin/admin.module';
 
 
 @Module({
@@ -30,6 +31,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     }),
     UserModule,
     AuthModule,
+    AdminModule,
   ],
   controllers: [ApiController],
   providers: [ApiService, JwtStrategy, JwtAuthGuard],
