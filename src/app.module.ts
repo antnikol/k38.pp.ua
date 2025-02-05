@@ -4,7 +4,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApiController } from './api/api.controller';
 import { ApiService } from './api/api.service';
 import { User } from './entities/user.entity'; 
-import { UserModule } from './user/user.module'
+import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { UserModule } from './user/user.module'
       }),
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [ApiController],
   providers: [ApiService],
