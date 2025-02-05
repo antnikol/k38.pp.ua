@@ -1,23 +1,30 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ApiController } from './api/api.controller';
 import { ApiService } from './api/api.service';
 import { User } from './entities/user.entity'; 
+import { UserModule } from './user/user.module'
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: process.env.DB_HOST,  // Ваш IP адреса або домен
-      port: 3306,
-      username: process.env.DB_USER,  // Користувач
-      password: process.env.DB_PASSWORD,  // Пароль
-      database: process.env.DB_NAME,  // Назва бази даних
-      entities: [User],
-      synchronize: true,  // Встановити на false для продакшн
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mysql',
+        host: configService.get<string>('DB_HOST'),
+        port: Number(configService.get('DB_PORT')) || 3306,
+        username: configService.get<string>('DB_USER'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
+        entities: [User],
+        autoLoadEntities: true, // Підключає всі сутності автоматично
+        synchronize: true, // Для продакшн краще false
+      }),
     }),
+    UserModule,
   ],
   controllers: [ApiController],
   providers: [ApiService],
