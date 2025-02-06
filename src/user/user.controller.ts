@@ -11,9 +11,9 @@ export class UserController {
   @UsePipes(new ValidationPipe({ whitelist: true }))
   async createUser(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(
-      createUserDto.name,
-      createUserDto.email,
-      createUserDto.password
+      createUserDto.name ?? '',
+      createUserDto.email ?? '',
+      createUserDto.password ?? ''
     );
   }
 

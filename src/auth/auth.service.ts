@@ -29,8 +29,8 @@ export class AuthService {
   //   return null;
   // }
   async validateUser(loginDto: LoginDto) {
-    const user = await this.userService.findByEmail(loginDto.email); // Знайти користувача за email
-    if (user && await bcrypt.compare(loginDto.password, user.password)) { // Перевірити хеш пароля
+    const user = await this.userService.findByEmail(loginDto.email ?? ''); // Знайти користувача за email
+    if (user && loginDto.password && await bcrypt.compare(loginDto.password, user.password ?? '')) { // Перевірити хеш пароля
       return user;  // Повертаємо користувача, якщо все вірно
     }
     return null;  // Якщо не знайдено або пароль невірний
@@ -64,7 +64,7 @@ export class AuthService {
     }
 
     // Хешування пароля
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password ?? '', 10);
 
     // Створення нового користувача
     const newUser = this.userRepository.create({

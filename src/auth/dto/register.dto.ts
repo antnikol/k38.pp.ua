@@ -2,15 +2,15 @@ import { IsString, IsEmail, IsArray, IsOptional } from 'class-validator';
 
 export class RegisterDto {
   @IsString()
-  name: string;
+  name?: string;
 
   @IsEmail()
-  email: string;
+  email?: string;
 
   @IsString()
-  password: string;
+  password?: string;
 
   @IsArray()
   @IsOptional()
-  roles: string[]; // Опційно можемо передавати ролі
+  roles?: string[]; // Опційно можемо передавати ролі
 }
