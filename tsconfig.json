@@ -21,5 +21,6 @@
     "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true
-  }
+  },
+  "include": ["src/**/*.ts"]
 }
