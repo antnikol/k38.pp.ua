@@ -14,10 +14,11 @@ RUN npm install
 COPY . .
 
 # Компілюємо TypeScript
-RUN npm run build
+RUN npm run build --verbose
 
 # Вказуємо порт, який буде використовуватись у контейнері
 EXPOSE 3000
 
 # Запускаємо сервер
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
+
